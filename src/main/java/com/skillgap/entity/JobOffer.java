@@ -3,7 +3,6 @@ package com.skillgap.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.skillgap.entity.enums.ExperienceLevel;
@@ -42,7 +41,7 @@ public class JobOffer {
     private Long id;
 
     @Column(unique = true)
-    private Integer externalId;
+    private String externalId;
 
     @NotNull
     private String title;
@@ -84,7 +83,7 @@ public class JobOffer {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    public JobOffer(int externalId, String title, String companyName, String city, String country, String roleTag,
+    public JobOffer(String externalId, String title, String companyName, String city, String country, String roleTag,
             ExperienceLevel experienceLevel, WorkModel workModel, String description, BigDecimal salaryMin,
             BigDecimal salaryMax, String currency, LocalDate publishedDate, OfferSource offerSource) {
         this.externalId = externalId;

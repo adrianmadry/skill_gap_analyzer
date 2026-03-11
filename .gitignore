@@ -1,5 +1,7 @@
 .notatki/
-
+data/
+data.mv.db
+data.trace.db
 
 target/
 .mvn/wrapper/maven-wrapper.jar

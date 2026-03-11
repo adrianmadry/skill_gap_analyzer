@@ -1,7 +1,6 @@
 package com.skillgap.entity;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import com.skillgap.entity.enums.SkillCategory;

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 
 import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.dao.SkillRepository;
+import com.skillgap.service.JobOfferLoader;
 
 @SpringBootApplication
 public class SkillgapApplication {
@@ -16,9 +17,9 @@ public class SkillgapApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(SkillRepository skillRepo, JobOfferRepository offerRepo) {
+	CommandLineRunner commandLineRunner(JobOfferLoader dataLoader) {
 		return args -> {
-
+			dataLoader.loadInitialData();
 		};
 	}
 
