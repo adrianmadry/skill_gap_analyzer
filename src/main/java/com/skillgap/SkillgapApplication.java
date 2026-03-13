@@ -5,9 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.skillgap.dao.JobOfferRepository;
-import com.skillgap.dao.SkillRepository;
-import com.skillgap.service.JobOfferLoader;
+import com.skillgap.service.JobOfferImportService;
 
 @SpringBootApplication
 public class SkillgapApplication {
@@ -17,9 +15,9 @@ public class SkillgapApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(JobOfferLoader dataLoader) {
+	CommandLineRunner commandLineRunner(JobOfferImportService importService) {
 		return args -> {
-			dataLoader.loadInitialData();
+			importService.importAll();
 		};
 	}
 

@@ -52,7 +52,7 @@ public class ExternalJobOfferMapper {
         }
     }
 
-    public void mapRequiredSkills(JobOffer jobOffer, JobOfferDto externalOfferDto) {
+    private void mapRequiredSkills(JobOffer jobOffer, JobOfferDto externalOfferDto) {
         if (externalOfferDto.getRequiredSkills() == null) {
             return;
         }
