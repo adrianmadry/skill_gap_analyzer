@@ -1,0 +1,37 @@
+{
+  "languages": {
+    "Java": ["java", "jdk", "j2ee", "jee"],
+    "Python": ["python", "py"],
+    "JavaScript": ["javascript", "java script", "js", "es6"],
+    "TypeScript": ["typescript", "ts"],
+    "C#": ["c#", ".net", "dotnet", "csharp"],
+    "C++": ["c++", "cpp"]
+  },
+  "frameworks": {
+    "Spring Boot": ["spring", "springboot", "spring boot 3"],
+    "React": ["react", "react.js", "reactjs"],
+    "Angular": ["angular", "angularjs"],
+    "Vue.js": ["vue", "vuejs"],
+    "Django": ["django"],
+    "Hibernate": ["hibernate", "jpa"]
+  },
+  "tools": {
+    "Docker": ["docker", "containerization"],
+    "Kubernetes": ["k8s", "kubernetes"],
+    "Git": ["git", "github", "gitlab"],
+    "Jenkins": ["jenkins", "ci/cd", "cicd"],
+    "Maven": ["maven", "mvn"],
+    "Gradle": ["gradle"]
+  },
+  "databases": {
+    "PostgreSQL": ["postgres", "postgresql"],
+    "MySQL": ["mysql"],
+    "MongoDB": ["mongo", "mongodb"],
+    "Redis": ["redis"]
+  },
+  "cloud": {
+    "AWS": ["aws", "amazon web services"],
+    "Azure": ["azure", "microsoft azure"],
+    "Google Cloud": ["gcp", "google cloud platform"]
+  }
+}

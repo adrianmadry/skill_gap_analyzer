@@ -2,7 +2,7 @@ package com.skillgap.mapper;
 
 import java.time.ZoneId;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.skillgap.dao.SkillRepository;
 import com.skillgap.dto.external.JobOfferDto;
@@ -14,8 +14,8 @@ import com.skillgap.entity.enums.WorkModel;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@Service //TODO
-@RequiredArgsConstructor //TODO
+@Component
+@RequiredArgsConstructor 
 public class ExternalJobOfferMapper {
 
     private final SkillRepository skillRepository;

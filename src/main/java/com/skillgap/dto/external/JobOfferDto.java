@@ -16,7 +16,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)  /// TODO
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class JobOfferDto {
     private String guid;
     private String title;
