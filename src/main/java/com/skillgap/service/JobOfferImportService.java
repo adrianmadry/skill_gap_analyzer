@@ -2,15 +2,16 @@ package com.skillgap.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.entity.JobOffer;
-import com.skillgap.mapper.ExternalJobOfferMapper;
 import com.skillgap.service.provider.JobOffersProvider;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,19 +21,24 @@ import lombok.extern.slf4j.Slf4j;
 public class JobOfferImportService {
 
     private final List<JobOffersProvider> providers;
-    private final ExternalJobOfferMapper mapper;
+    private final JobOfferService jobOfferService;
     private final JobOfferRepository jobOfferRepository;
 
+    @Transactional
     public void importAll() {
+        Set<String> existingIdInDb = jobOfferRepository.findAllExternalIds();
+
         for (JobOffersProvider provider : providers) {
             try {
                 log.info("Fetching offers from provider: {}", provider.getClass().getSimpleName());
                 List<JobOfferDto> dtos = provider.fetchAll();
-
                 List<JobOffer> offersToSave = new ArrayList<>();
+
                 for (JobOfferDto jobofferDto : dtos) {
-                    if (!jobOfferRepository.existsByExternalId(jobofferDto.getGuid())) {
-                        offersToSave.add(mapper.mapToJobOffer(jobofferDto));
+                    if (!existingIdInDb.contains(jobofferDto.getGuid())) {
+                        JobOffer entity = jobOfferService.mapFromDto(jobofferDto);
+                        offersToSave.add(entity);
+                        existingIdInDb.add(jobofferDto.getGuid());
                     }
                 }
                 jobOfferRepository.saveAll(offersToSave);

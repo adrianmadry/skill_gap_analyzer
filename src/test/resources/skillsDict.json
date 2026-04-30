@@ -1,0 +1,6 @@
+{
+  "Languages": {
+    "Java": ["java 17", "jdk"],
+    "Python": ["py", "Python3"]
+  }
+}

@@ -8,11 +8,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.service.JobOfferImportService;
 import com.skillgap.service.SkillDictionaryLoader;
-import com.skillgap.service.SkillExtractionService;
+import com.skillgap.service.SkillService;
 
 @SpringBootApplication
 public class SkillgapApplication {
@@ -22,9 +23,10 @@ public class SkillgapApplication {
 	}
 
 	@Bean
-	CommandLineRunner commandLineRunner(JobOfferImportService importService, SkillExtractionService service, SkillDictionaryLoader loader) {
+	@Profile("!test")
+	CommandLineRunner commandLineRunner(JobOfferImportService importService, SkillService service, SkillDictionaryLoader loader) {
 		return args -> {
-
+			importService.importAll();
 		};
 	}
 

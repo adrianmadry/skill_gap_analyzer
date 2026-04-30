@@ -2,8 +2,10 @@ package com.skillgap.service;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ public class SkillExtractionService {
     private final SkillDictionaryLoader skillDictionaryLoader;
     private Map<String, String> aliasToSkillName;
     private Pattern allSkillsPattern;
+    private final Map<String, Integer> unknownSkillCounter = new ConcurrentHashMap<>();
 
     @PostConstruct
     public void init() {
@@ -62,6 +65,8 @@ public class SkillExtractionService {
 
             if (skillNameInDictionary != null) {
                 requiredSkillsFromDict.add(skillNameInDictionary);
+            } else {
+                this.unknownSkillCounter.merge(cleanedSkillName, 1, Integer::sum);
             }
         }
         return requiredSkillsFromDict;
@@ -72,10 +77,21 @@ public class SkillExtractionService {
                                                 .sorted(Comparator.comparingInt(String::length).reversed())
                                                 .map(Pattern::quote)
                                                 .collect(Collectors.joining("|"));
-        String regex = "\\b(" + joinedAliases + ")(?=\\s|$|[.,!?;)])";
+        String regex = "(?<=^|\\s|[({\\[,;])(" + joinedAliases + ")(?=\\s|$|[.,!?;)\\]}])";
         return Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
     }
 
+    public Map<String, Integer> getUnknownSkillsCounter() {
+        return unknownSkillCounter.entrySet()
+                                .stream()
+                                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                                .collect(Collectors.toMap(
+                                    Map.Entry::getKey, 
+                                    Map.Entry::getValue,
+                                    (oldValue, newValue) -> oldValue,
+                                    LinkedHashMap::new
+                                ));
+    }
 
 
 }

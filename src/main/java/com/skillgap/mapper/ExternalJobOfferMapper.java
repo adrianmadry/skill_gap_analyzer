@@ -1,38 +1,38 @@
 package com.skillgap.mapper;
 
 import java.time.ZoneId;
+import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.skillgap.dao.SkillRepository;
 import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.ExperienceLevel;
 import com.skillgap.entity.enums.WorkModel;
-
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor 
 public class ExternalJobOfferMapper {
 
-    private final SkillRepository skillRepository;
 
-    @Transactional
-    public JobOffer mapToJobOffer(JobOfferDto jobOfferDto) {
-
+    public JobOffer mapToJobOffer(JobOfferDto jobOfferDto, Set<Skill> skills) {
         JobOffer offer = new JobOffer();
         offer.setTitle(jobOfferDto.getTitle());
         offer.setExternalId(jobOfferDto.getGuid());
         offer.setWorkModel(WorkModel.fromString(jobOfferDto.getWorkplaceType()));
         offer.setExperienceLevel(ExperienceLevel.fromString(jobOfferDto.getExperienceLevel()));
         offer.setCity(jobOfferDto.getCity());
-        offer.setPublishedDate(jobOfferDto.getPublishedAt().atZone(ZoneId.systemDefault()).toLocalDate());
+        if (jobOfferDto.getPublishedAt() != null) {
+            offer.setPublishedDate(jobOfferDto.getPublishedAt().atZone(ZoneId.systemDefault()).toLocalDate());
+        }
 
-        mapRequiredSkills(offer, jobOfferDto);
-
+        // Assocciate Skills to JobOffer
+        for (Skill skill: skills) {
+            offer.addSkill(skill);
+        }
+        
         mapPaymentData(offer, jobOfferDto);
 
         return offer;
@@ -51,35 +51,5 @@ public class ExternalJobOfferMapper {
             }
         }
     }
-
-    private void mapRequiredSkills(JobOffer jobOffer, JobOfferDto externalOfferDto) {
-        if (externalOfferDto.getRequiredSkills() == null) {
-            return;
-        }
-
-        for (String skillName : externalOfferDto.getRequiredSkills()) {
-            if (skillName == null || skillName.isBlank()) {
-                continue;
-            }
-
-            // Check if skill already exists in db
-            Skill skill = skillRepository.findByNameIgnoreCase(skillName)
-                        .orElseGet(() -> {
-                            Skill s = new Skill();
-                            s.setName(skillName);
-                            return skillRepository.save(s);
-                        });
-
-            // Assocciate Skill to JobOffer
-            jobOffer.addSkill(skill);
-        }
-    }
-
-
-           
-
-    
-
-
 
 }

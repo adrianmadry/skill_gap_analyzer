@@ -28,7 +28,6 @@ public class SkillDictionaryLoader {
     public void init() {
         this.normalizedDictionary = loadAndNormalize();
         log.info("Skills dictionary has been loaded");
-        System.out.println(this.normalizedDictionary);
     }
 
     public Map<String, String> loadAndNormalize() {

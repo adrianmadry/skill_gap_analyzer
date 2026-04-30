@@ -57,5 +57,9 @@ public class Skill {
         this.category = category;
     }
 
+    public Skill(String name) {
+        this.name = name;
+    }
+
   
 }
