@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.skillgap.entity.enums.ExperienceLevel;
+import com.skillgap.entity.enums.JobRoleTag;
 import com.skillgap.entity.enums.OfferSource;
 import com.skillgap.entity.enums.WorkModel;
 
@@ -52,7 +53,8 @@ public class JobOffer {
 
     private String country;
 
-    private String roleTag;
+    @Enumerated(EnumType.STRING)
+    private JobRoleTag roleTag;
 
     @Enumerated(EnumType.STRING)
     private ExperienceLevel experienceLevel;
@@ -83,7 +85,7 @@ public class JobOffer {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    public JobOffer(String externalId, String title, String companyName, String city, String country, String roleTag,
+    public JobOffer(String externalId, String title, String companyName, String city, String country, JobRoleTag roleTag,
             ExperienceLevel experienceLevel, WorkModel workModel, String description, BigDecimal salaryMin,
             BigDecimal salaryMax, String currency, LocalDate publishedDate, OfferSource offerSource) {
         this.externalId = externalId;

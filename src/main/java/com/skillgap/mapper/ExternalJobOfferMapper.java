@@ -10,12 +10,15 @@ import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.ExperienceLevel;
 import com.skillgap.entity.enums.WorkModel;
+import com.skillgap.service.JobRoleExtractor;
+
 import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class ExternalJobOfferMapper {
 
+    private final JobRoleExtractor jobRoleExtractor;
 
     public JobOffer mapToJobOffer(JobOfferDto jobOfferDto, Set<Skill> skills) {
         JobOffer offer = new JobOffer();
@@ -24,6 +27,7 @@ public class ExternalJobOfferMapper {
         offer.setWorkModel(WorkModel.fromString(jobOfferDto.getWorkplaceType()));
         offer.setExperienceLevel(ExperienceLevel.fromString(jobOfferDto.getExperienceLevel()));
         offer.setCity(jobOfferDto.getCity());
+        offer.setRoleTag(jobRoleExtractor.matchRole(jobOfferDto.getTitle()));
         if (jobOfferDto.getPublishedAt() != null) {
             offer.setPublishedDate(jobOfferDto.getPublishedAt().atZone(ZoneId.systemDefault()).toLocalDate());
         }

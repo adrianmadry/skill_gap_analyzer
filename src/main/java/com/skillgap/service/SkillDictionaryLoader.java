@@ -35,6 +35,10 @@ public class SkillDictionaryLoader {
         
         try {
             InputStream inputStream = getClass().getResourceAsStream("/skillsDict.json");
+            if (inputStream == null) {
+                throw new RuntimeException("skillsDict.json not found in resources!");
+            }
+
             Map<String, Map<String, List<String>>> rawDict = objectMapper.readValue(inputStream, 
                                         new TypeReference <Map<String, Map<String, List<String>>>>() {});
             rawDict.values().forEach(technologies -> {

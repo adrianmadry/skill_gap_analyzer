@@ -8,9 +8,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.dto.external.JobOfferDto.EmploymentTypeDto;
@@ -18,14 +22,24 @@ import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.ExperienceLevel;
 import com.skillgap.entity.enums.WorkModel;
+import com.skillgap.service.JobRoleExtractor;
 
+@ExtendWith(MockitoExtension.class)
 public class ExternalJobOfferMapperTest {
     
     @Nested
     @DisplayName("Test for mapToJobOffer method")
     class mapToJobOfferTests {
 
-        private final ExternalJobOfferMapper externalJobOfferMapper = new ExternalJobOfferMapper();
+        @Mock
+        private JobRoleExtractor jobRoleExtractor;
+
+        private ExternalJobOfferMapper externalJobOfferMapper;
+
+        @BeforeEach
+        void setUp() {
+            externalJobOfferMapper = new ExternalJobOfferMapper(jobRoleExtractor);
+        }
         
         @Test
         @DisplayName("Should return JobOffer entity with all data from DTO")

@@ -26,6 +26,7 @@ public class JobOfferImportService {
 
     @Transactional
     public void importAll() {
+        System.out.println("DEBUG: Import start: ");
         Set<String> existingIdInDb = jobOfferRepository.findAllExternalIds();
 
         for (JobOffersProvider provider : providers) {

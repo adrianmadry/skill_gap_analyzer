@@ -166,10 +166,7 @@ public class SkillExtractionServiceTest {
                         .containsExactlyInAnyOrder("JavaScript");
         }
 
-        
-
-
-
+    
     }
 
     @Nested
