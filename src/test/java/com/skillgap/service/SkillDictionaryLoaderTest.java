@@ -14,8 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SkillDictionaryLoaderTest {
 
@@ -87,7 +87,7 @@ public class SkillDictionaryLoaderTest {
 
     @Test
     @DisplayName("Should handle case while to import is empty")
-    void shouldHandleEmptyDictionary() {
+    void shouldHandleEmptyDictionary() throws Exception {
         // Given
         ObjectMapper mockMapper = mock(ObjectMapper.class);
         SkillDictionaryLoader loaderWithEmptyFile= new SkillDictionaryLoader(mockMapper);

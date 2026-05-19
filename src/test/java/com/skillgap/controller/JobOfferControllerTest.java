@@ -1,7 +1,7 @@
 package com.skillgap.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,7 +25,7 @@ import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -39,10 +39,10 @@ public class JobOfferControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @MockBean
     private JobOfferService jobOfferService;
     
-    @MockitoBean
+    @MockBean
     private SkillExtractionService skillExtractionService;
 
     @Captor

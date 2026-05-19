@@ -16,9 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import com.skillgap.dto.external.JobOfferDto;
 
-import tools.jackson.core.exc.StreamReadException;
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SnapshotJobOffersProviderTest {
 
@@ -56,7 +56,7 @@ public class SnapshotJobOffersProviderTest {
             SnapshotJobOffersProvider providerWithError = new SnapshotJobOffersProvider(mockMapper);
 
             when(mockMapper.readValue(any(InputStream.class), any(TypeReference.class)))
-                            .thenThrow(new StreamReadException(null, "Unexpected character"));
+                            .thenThrow(new JsonParseException(null, "Unexpected character"));
 
             // When & Then
             RuntimeException exception = assertThrows(RuntimeException.class, () -> {
@@ -64,7 +64,7 @@ public class SnapshotJobOffersProviderTest {
             });
 
             assertThat(exception.getMessage()).isEqualTo("Failed to read JSON file");
-            assertThat(exception.getCause()).isInstanceOf(StreamReadException.class);
+            assertThat(exception.getCause()).isInstanceOf(JsonParseException.class);
         
         }
 

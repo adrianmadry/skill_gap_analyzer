@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import com.skillgap.dto.external.JobOfferDto;
 
 import lombok.RequiredArgsConstructor;
-import tools.jackson.core.type.TypeReference;
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 @RequiredArgsConstructor

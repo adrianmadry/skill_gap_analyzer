@@ -16,4 +16,5 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
 
     List<Skill> findAllByNameInIgnoreCase(Set<String> skillNames);
 
+
 }

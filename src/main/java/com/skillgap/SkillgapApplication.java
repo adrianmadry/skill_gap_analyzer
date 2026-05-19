@@ -1,6 +1,5 @@
 package com.skillgap;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,8 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
+import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.entity.JobOffer;
+import com.skillgap.entity.enums.JobRoleTag;
 import com.skillgap.mapper.ExternalJobOfferMapper;
 import com.skillgap.service.JobOfferImportService;
 import com.skillgap.service.RoleDictionaryLoader;
@@ -29,10 +30,15 @@ public class SkillgapApplication {
 	@Bean
 	// @Profile("!test")
 	CommandLineRunner commandLineRunner(JobOfferImportService importService, SkillService service, SkillDictionaryLoader loader, RoleDictionaryLoader roleDictionaryLoader,
-										ExternalJobOfferMapper externalJobOfferMapper
+										ExternalJobOfferMapper externalJobOfferMapper, JobOfferRepository repo
 	) {
 		return args -> {
 			importService.importAll();
+
+			// System.out.println("--- TEST REPOZYTORIUM ---");
+			// long id = 1;
+            // repo.findCoOccuringSkills(id, "Kraków", JobRoleTag.JAVA_DEVELOPER)
+            //     .forEach(System.out::println);
 
 
 

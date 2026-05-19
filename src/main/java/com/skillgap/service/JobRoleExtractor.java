@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class JobRoleExtractionService {
+public class JobRoleExtractor {
 
     private final RoleDictionaryLoader roleDictionaryLoader;
 
