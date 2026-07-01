@@ -8,6 +8,9 @@ public record SkillTotalCountDto(
     @Schema(description = "Skill identifier", example = "13")
     Long id,
 
+    @Schema(description = "Skill name", example = "Hibernate")
+    String skillName,
+
     @Schema(description = "Total number of job offers containing the skill", example = "22")
     Long totalCount
 

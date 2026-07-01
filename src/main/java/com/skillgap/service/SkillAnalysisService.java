@@ -21,7 +21,6 @@ import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.JobRoleTag;
 import com.skillgap.exception.SkillNotFoundException;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -60,7 +59,8 @@ public class SkillAnalysisService {
         long totalBaseSkillOffers = jobOfferRepository.countBySkillId(baseSkill.getId(), city, role);
         if (totalBaseSkillOffers == 0) return Stream.empty();
 
-        List<SkillCoCountDto> relatedSkills = jobOfferRepository.findCoOccuringSkills(baseSkill.getId(), city, role);
+        Pageable limitCandidates = PageRequest.of(0, candidatePool);
+        List<SkillCoCountDto> relatedSkills = jobOfferRepository.findCoOccuringSkills(baseSkill.getId(), city, role, limitCandidates);
         
         List<Long> skillsIds =  relatedSkills.stream().map(skill -> skill.id()).toList();
         Map<Long, Long> relatedSkillsCountMap = jobOfferRepository.countForMultipleSkillsIds(skillsIds, city, role)

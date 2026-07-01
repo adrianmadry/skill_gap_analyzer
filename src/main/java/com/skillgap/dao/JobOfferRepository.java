@@ -51,7 +51,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
    )
    List<SkillCoCountDto> findCoOccuringSkills(@Param("baseSkillId") Long baseSkillId,
                                              @Param("city") String city,
-                                             @Param("role") JobRoleTag role);
+                                             @Param("role") JobRoleTag role,
+                                             Pageable pageable);
 
    @Query(
       "SELECT CAST(COUNT(o) AS long) " +
@@ -66,7 +67,7 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
                      @Param("role") JobRoleTag role);
 
    @Query(
-      "SELECT new com.skillgap.dto.SkillTotalCountDto(s.id, CAST(COUNT(o) AS long)) " +
+      "SELECT new com.skillgap.dto.SkillTotalCountDto(s.id, s.name, CAST(COUNT(o) AS long)) " +
       "FROM JobOffer o " +
       "JOIN o.skills s " +
       "WHERE s.id IN :skillIds " +
@@ -78,6 +79,29 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
                      @Param("skillIds") List<Long> skillIds,
                      @Param("city") String city, 
                      @Param("role") JobRoleTag role);
+
+   @Query(
+      "SELECT CAST(COUNT(o) AS long) " +
+      "FROM JobOffer o " +
+      "WHERE (:role IS NULL OR o.roleTag = :role) " +
+      "AND (:city IS NULL OR o.city = :city) "
+   )
+   long countOffersByRoleAndCity(
+                     @Param("role") JobRoleTag role, 
+                     @Param("city") String city);
+
+   @Query(
+      "SELECT new com.skillgap.dto.SkillTotalCountDto(s.id, s.name, CAST(COUNT(o) AS long)) " +
+      "FROM JobOffer o " +
+      "JOIN o.skills s " +
+      "WHERE (:role IS NULL OR o.roleTag = :role) " +
+      "AND (:city IS NULL OR o.city = :city) " +
+      "GROUP BY s.id " +
+      "ORDER BY COUNT(o) DESC"
+   )
+   List<SkillTotalCountDto> getSkillsDistribution(
+                     @Param("role") JobRoleTag role, 
+                     @Param("city") String city);
 
 
 }
