@@ -11,8 +11,8 @@ public record SkillRecommendationDto (
     @Schema(description = "Skill name", example = "Docker")
     String skillName,
 
-    @Schema(description = "Recommendation score — higher means more relevant", example = "320.0")
-    double recScore,
+    @Schema(description = "Recommendation score based on total co-occurrence count with user's existing skills — higher means more relevant", example = "320.0")
+    long recScore,
     
     @Schema(description = "Market category indicating skill importance for the requested role", example = "MUST_HAVE")
     String category

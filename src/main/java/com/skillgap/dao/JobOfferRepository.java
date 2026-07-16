@@ -102,6 +102,21 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
    List<SkillTotalCountDto> getSkillsDistribution(
                      @Param("role") JobRoleTag role, 
                      @Param("city") String city);
+   
+   @Query(value = """
+      SELECT 
+         jo.ID AS offerId,
+         ARRAY_AGG(s.ID) AS skills
+      FROM JOB_OFFER jo 
+      JOIN JOB_OFFER_SKILLS jos ON jo.ID = jos.JOB_OFFER_ID
+      JOIN SKILL s ON jos.SKILL_ID = s.ID
+      WHERE jo.ROLE_TAG = :#{#role.name()}
+      AND (:city IS NULL OR jo.city = :city)
+      GROUP BY jo.ID
+      """, nativeQuery = true)         
+   List<Object[]> getOffersWithSkillsSet(
+                     @Param("role") JobRoleTag role, 
+                     @Param("city") String city);
 
 
 }

@@ -1,8 +1,13 @@
 package com.skillgap.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -50,7 +55,7 @@ public class SkillAnalysisService {
                 .sorted(Comparator.comparingDouble(CoOccurrenceResultDto::coScore).reversed())
                 .limit(limit)
                 .toList();
-    }
+    } 
 
     private Stream<CoOccurrenceResultDto> getCoOccurrenceSkillsStream(String baseSkillName, String city, JobRoleTag role) {
         Skill baseSkill = skillRepository.findByNameIgnoreCase(baseSkillName)
@@ -83,9 +88,6 @@ public class SkillAnalysisService {
     private double calculateCoOccurrenceRate(long baseSkillOffersCount, long bothSkillsOfferscount) {
         return (double) bothSkillsOfferscount / baseSkillOffersCount * 100;
     }
-
-
-
 
 
 }
