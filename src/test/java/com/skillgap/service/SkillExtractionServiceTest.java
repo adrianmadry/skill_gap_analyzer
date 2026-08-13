@@ -15,7 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.skillgap.dto.external.JobOfferDto;
+import com.skillgap.integration.common.JobOfferDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

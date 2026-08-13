@@ -7,10 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.skillgap.dao.JobOfferRepository;
-import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.dto.response.JobOfferResponseDto;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
+import com.skillgap.integration.common.JobOfferDto;
 import com.skillgap.mapper.ApiJobOfferMapper;
 import com.skillgap.mapper.ExternalJobOfferMapper;
 

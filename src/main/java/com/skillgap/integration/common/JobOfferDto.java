@@ -1,4 +1,4 @@
-package com.skillgap.dto.external;
+package com.skillgap.integration.common;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -12,6 +12,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Common DTO for job offers fetched from different job portals (like JustJoinIt, NoFluffJobs).
+ * Keeps everything in one clean, unified format before saving to the database.
+ */
 @Getter
 @Setter
 @NoArgsConstructor

@@ -5,11 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.skillgap.dto.external.JobOfferDto;
-
 import lombok.RequiredArgsConstructor;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skillgap.integration.common.JobOfferDto;
 
 @Component
 @RequiredArgsConstructor

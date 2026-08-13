@@ -16,12 +16,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.skillgap.dto.external.JobOfferDto;
-import com.skillgap.dto.external.JobOfferDto.EmploymentTypeDto;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.ExperienceLevel;
 import com.skillgap.entity.enums.WorkModel;
+import com.skillgap.integration.common.JobOfferDto;
+import com.skillgap.integration.common.JobOfferDto.EmploymentTypeDto;
 import com.skillgap.service.JobRoleExtractor;
 
 @ExtendWith(MockitoExtension.class)

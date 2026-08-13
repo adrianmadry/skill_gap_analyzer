@@ -2,7 +2,7 @@ package com.skillgap.service.provider;
 
 import java.util.List;
 
-import com.skillgap.dto.external.JobOfferDto;
+import com.skillgap.integration.common.JobOfferDto;
 
 public interface JobOffersProvider {
 

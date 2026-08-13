@@ -5,11 +5,11 @@ import java.util.Set;
 
 import org.springframework.stereotype.Component;
 
-import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.ExperienceLevel;
 import com.skillgap.entity.enums.WorkModel;
+import com.skillgap.integration.common.JobOfferDto;
 import com.skillgap.service.JobRoleExtractor;
 
 import lombok.RequiredArgsConstructor;

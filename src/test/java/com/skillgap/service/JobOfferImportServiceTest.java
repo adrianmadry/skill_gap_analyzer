@@ -22,8 +22,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.skillgap.dao.JobOfferRepository;
-import com.skillgap.dto.external.JobOfferDto;
 import com.skillgap.entity.JobOffer;
+import com.skillgap.integration.common.JobOfferDto;
 import com.skillgap.service.provider.JobOffersProvider;
 
 @ExtendWith(MockitoExtension.class)

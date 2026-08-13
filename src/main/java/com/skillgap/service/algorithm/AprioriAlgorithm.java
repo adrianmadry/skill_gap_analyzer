@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  * </ol>
  *
  * <p>Minimum support is expressed as a fraction of total offers,
- * e.g. {@code 0.05} means a skill or stack must appear in at least 5% of offers.
+ * e.g. {0.05} means a skill or stack must appear in at least 5% of offers.
  *
  */
 @Component
