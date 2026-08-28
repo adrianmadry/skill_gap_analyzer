@@ -30,9 +30,11 @@ import com.skillgap.service.provider.JustJoinItOffersProvider;
 public class SkillgapApplication {
 
 	private final JustJoinItOffersProvider joinItClient;
+	private final JobOfferImportService importService;
 
-	public SkillgapApplication(JustJoinItOffersProvider joinItClient) {
+	public SkillgapApplication(JustJoinItOffersProvider joinItClient, JobOfferImportService importService) {
         this.joinItClient = joinItClient;
+		this.importService = importService;
     }
 
     public static void main(String[] args) {
@@ -43,14 +45,14 @@ public class SkillgapApplication {
 	public void onApplicationReady() {
 		log.info("Application ready - fetching offers...");
 		try {
-			List<JobOfferDto> offers = this.joinItClient.fetchAll();
+			// List<JobOfferDto> offers = this.joinItClient.fetchAll();
+			importService.importAll();
+			
 
 		} catch (Exception e) {
 			log.error("Error during offers fetching: ", e);
 		}
 
 	}
-
-
 
 }

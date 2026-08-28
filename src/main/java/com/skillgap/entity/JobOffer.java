@@ -106,16 +106,10 @@ public class JobOffer {
 
     public void addSkill(Skill skill) {
         this.skills.add(skill);
-        skill.getJobOffers().add(this);
     }
 
     public void removeSkill(Skill skill) {
         this.skills.remove(skill);
-        skill.getJobOffers().remove(this);
     }
 
-
-
-    
-    
 }

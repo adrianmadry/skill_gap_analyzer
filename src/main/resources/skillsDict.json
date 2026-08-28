@@ -5,7 +5,11 @@
     "JavaScript": ["javascript", "java script", "js", "es6"],
     "TypeScript": ["typescript", "ts"],
     "C#": ["c#", ".net", "dotnet", "csharp"],
-    "C++": ["c++", "cpp"]
+    "C++": ["c++", "cpp"],
+    "Kotlin": ["kotlin", "kt"],
+    "Ruby": ["ruby"],
+    "Bash": ["bash", "shell", "sh"],
+    "HTML": ["html", "html5"]
   },
   "frameworks": {
     "Spring Boot": ["spring", "springboot", "spring boot 3"],
@@ -13,7 +17,8 @@
     "Angular": ["angular", "angularjs"],
     "Vue.js": ["vue", "vuejs"],
     "Django": ["django"],
-    "Hibernate": ["hibernate", "jpa"]
+    "Hibernate": ["hibernate", "jpa"],
+    "FastAPI": ["fastapi"]
   },
   "tools": {
     "Docker": ["docker", "containerization"],
@@ -21,17 +26,60 @@
     "Git": ["git", "github", "gitlab"],
     "Jenkins": ["jenkins", "ci/cd", "cicd"],
     "Maven": ["maven", "mvn"],
-    "Gradle": ["gradle"]
+    "Gradle": ["gradle"],
+    "Jira": ["jira"],
+    "Confluence": ["confluence"],
+    "Terraform": ["terraform", "tf"],
+    "Kafka": ["kafka", "apache kafka"],
+    "Azure DevOps": ["azure devops", "ado"],
+    "Microsoft 365": ["microsoft 365", "m365", "office 365"],
+    "SAP": ["sap"]
   },
   "databases": {
+    "SQL" : ["sql"],
     "PostgreSQL": ["postgres", "postgresql"],
     "MySQL": ["mysql"],
     "MongoDB": ["mongo", "mongodb"],
-    "Redis": ["redis"]
+    "Redis": ["redis"],
+    "Oracle": ["oracle", "oracle db", "oracledb"],
+    "MS SQL": ["ms sql", "mssql", "sql server", "microsoft sql server"]
   },
   "cloud": {
     "AWS": ["aws", "amazon web services"],
     "Azure": ["azure", "microsoft azure"],
-    "Google Cloud": ["gcp", "google cloud platform"]
+    "Google Cloud": ["gcp", "google cloud platform"],
+    "Cloud": ["cloud", "cloud computing"]
+  },
+  "ai": {
+    "AI": ["ai", "artificial intelligence"],
+    "LLM": ["llm", "large language model", "large language models"],
+    "Machine Learning": ["machine learning", "ml"],
+    "Claude Code": ["claude code", "claude"]
+  },
+  "data": {
+    "Databricks": ["databricks"],
+    "Analytics": ["analytics", "data analytics"],
+    "Power BI": ["power bi", "powerbi"],
+    "ETL": ["etl"],
+    "Data Science": ["data science"]
+  },
+  "operating_systems": {
+    "Linux": ["linux"],
+    "Windows": ["windows", "win"]
+  },
+  "concepts_and_methodologies": {
+    "Scrum": ["scrum", "agile"],
+    "Microservices": ["microservices", "microservice", "microservice architecture"],
+    "DevOps": ["devops"],
+    "Cybersecurity": ["cybersecurity", "cyber security", "sec"],
+    "REST API": ["rest api", "rest", "restful", "restful api"],
+    "SOAP": ["soap"],
+    "Software Architecture": ["software architecture"],
+    "Project Management": ["project management", "pm"],
+    "SDLC": ["sdlc"],
+    "Testing": ["testing", "manual testing", "qa", "software testing"],
+    "BPMN": ["bpmn"],
+    "UML": ["uml"],
+    "ERP": ["erp"]
   }
 }

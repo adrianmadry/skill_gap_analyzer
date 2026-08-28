@@ -39,7 +39,7 @@ public class JustJoinItOffersProvider implements JobOffersProvider {
             final Integer currentCursor = nextCursor;
 
             try {
-                log.info("Sending request to JustJoinIt for cursor: {}", currentCursor);
+                log.debug("Sending request to JustJoinIt for cursor: {}", currentCursor);
 
                 JustJoinItResponseWrapper response = getSingleBatch(currentCursor);
                 

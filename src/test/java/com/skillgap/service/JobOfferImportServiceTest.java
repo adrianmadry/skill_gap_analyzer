@@ -20,7 +20,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import com.skillgap.dao.ImportLogRepository;
 import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.integration.common.JobOfferDto;
@@ -33,9 +35,15 @@ public class JobOfferImportServiceTest {
     private JobOfferRepository jobOfferRepository;
 
     @Mock
+    private ImportLogRepository importLogRepository;
+
+    @Mock
     private JobOfferService jobOfferService;
 
     private JobOfferImportService jobOfferImportService;
+
+    @Mock
+    private TransactionTemplate transactionTemplate;
 
     @Captor
     private ArgumentCaptor<List<JobOffer>> offersCaptor;
@@ -54,7 +62,9 @@ public class JobOfferImportServiceTest {
             jobOfferImportService = new JobOfferImportService(
                 List.of(jobOffersProvider), 
                 jobOfferService,
-                jobOfferRepository
+                jobOfferRepository, 
+                transactionTemplate,
+                importLogRepository
             );
         }
 
@@ -124,7 +134,9 @@ public class JobOfferImportServiceTest {
             jobOfferImportService = new JobOfferImportService(
                 List.of(jobOffersProvider1, jobOffersProvider2), 
                 jobOfferService,
-                jobOfferRepository
+                jobOfferRepository, 
+                transactionTemplate,
+                importLogRepository
             );
         }
 
@@ -207,12 +219,5 @@ public class JobOfferImportServiceTest {
 
         }
 
-
-
-
-
-
     }
-
-
 }
