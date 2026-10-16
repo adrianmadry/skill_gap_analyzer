@@ -5,6 +5,7 @@ import java.util.Set;
 
 import com.skillgap.entity.enums.SkillCategory;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,6 +52,12 @@ public class Skill {
     )
     private Set<JobOffer> jobOffers = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY,
+                mappedBy = "skill",
+                cascade = CascadeType.ALL,
+                orphanRemoval = true
+    )
+    private Set<SkillAlias> aliases = new HashSet<>();
 
     public Skill(String name, String description, SkillCategory category) {
         this.name = name;
@@ -59,6 +67,11 @@ public class Skill {
 
     public Skill(String name) {
         this.name = name;
+    }
+
+    public void addAlias(String aliasName) {
+        SkillAlias alias = new SkillAlias(aliasName, this);
+        this.aliases.add(alias);
     }
 
   

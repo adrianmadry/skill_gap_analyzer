@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.skillgap.entity.enums.JobRoleTag;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

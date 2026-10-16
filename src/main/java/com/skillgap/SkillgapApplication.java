@@ -31,10 +31,12 @@ public class SkillgapApplication {
 
 	private final JustJoinItOffersProvider joinItClient;
 	private final JobOfferImportService importService;
+	private final JobOfferRepository jobOfferRepository;
 
-	public SkillgapApplication(JustJoinItOffersProvider joinItClient, JobOfferImportService importService) {
+	public SkillgapApplication(JustJoinItOffersProvider joinItClient, JobOfferImportService importService, JobOfferRepository jobOfferRepository) {
         this.joinItClient = joinItClient;
 		this.importService = importService;
+		this.jobOfferRepository = jobOfferRepository;
     }
 
     public static void main(String[] args) {
@@ -43,16 +45,18 @@ public class SkillgapApplication {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void onApplicationReady() {
-		log.info("Application ready - fetching offers...");
-		try {
-			// List<JobOfferDto> offers = this.joinItClient.fetchAll();
-			importService.importAll();
-			
 
-		} catch (Exception e) {
-			log.error("Error during offers fetching: ", e);
+		if (jobOfferRepository.count() == 0) {
+			log.info("Application ready - fetching offers...");
+			try {
+
+				importService.importAll();
+				
+			} catch (Exception e) {
+				log.error("Error during offers fetching: ", e);
+			}
 		}
-
+		
 	}
 
 }

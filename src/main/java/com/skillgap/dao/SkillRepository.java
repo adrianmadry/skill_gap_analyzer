@@ -21,6 +21,8 @@ public interface SkillRepository extends JpaRepository<Skill, Long> {
 
     List<Skill> findAllByIdIn(Set<Long> skillIds);
 
+    boolean existsByNameIgnoreCase(String name);
+
     @Query("SELECT s.id FROM Skill s WHERE LOWER(s.name) IN :names")
     List<Long> findIdsByNamesIgnoreCase(@Param("names") List<String> userSkills);
 

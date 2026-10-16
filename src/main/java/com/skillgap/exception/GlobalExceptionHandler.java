@@ -9,7 +9,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.skillgap.exception.SkillNotFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -26,6 +25,46 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleNoMarketDataException(NoMarketDataException ex) {
         return new ResponseEntity<>(
             Map.of("error", "Not Found", "message", ex.getMessage()), 
+            HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Not found", "message", ex.getMessage()),
+            HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(ProviderNotFoundException.class)
+    public ResponseEntity<Object> handleProviderNotFoundException(ProviderNotFoundException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Not found", "message", ex.getMessage()),
+            HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(SkillAlreadyExistsException.class)
+    public ResponseEntity<Object> handleSkillAlreadyExistsException(SkillAlreadyExistsException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Conflict", "message", ex.getMessage()),
+            HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(AliasAlreadyExistsException.class)
+    public ResponseEntity<Object> handleAliasAlreadyExistsException(AliasAlreadyExistsException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Conflict", "message", ex.getMessage()),
+            HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(JobOfferNotFoundException.class)
+    public ResponseEntity<Object> handleJobOfferNotFoundException(JobOfferNotFoundException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Not Found", "message", ex.getMessage()),
             HttpStatus.NOT_FOUND
         );
     }

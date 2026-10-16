@@ -29,22 +29,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/api/analysis")
 @RequiredArgsConstructor
-@io.swagger.v3.oas.annotations.tags.Tag(name = "Skills Analysis", description = "Endpoints to inspect correlactions between technologies/skills")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Skills Analysis", description = "Endpoints to inspect correlactions between technologies/skills and analyze of user profile")
 public class SkillAnalysisController {
 
     private final SkillAnalysisService skillAnalysisService;
     private final SkillGapService skillGapService;
     private final SkillStackService skillStackService;
 
-    @Operation(summary = "Get top skills by popularity", 
-               description = "Returns a list of the most popular skills, with optional filtering by city and job role")
-    @GetMapping("/top-skills")
-    public List<SkillStatsDto> getTopSkills(
-                    @RequestParam(required = false) String city,
-                    @RequestParam(required = false) JobRoleTag role,
-                    @RequestParam(defaultValue = "10") int limit
+    @Operation(summary = "Calculate skill gap based on full profile", 
+               description = "Compares provided user skills against market requirements for specific role and location")
+    @PostMapping("/user/skill-gap")
+    public ResponseEntity<SkillGapResponseDto> performSkillGapAnalyze(
+                    @Valid @RequestBody SkillGapRequestDto request
     ) {
-        return skillAnalysisService.getTopSkills(city, role, limit);
+        return ResponseEntity.ok(skillGapService.analyzeSkillGap(request));
+    }
+
+    @Operation(summary = "Find best matching job offers for user profile", 
+           description = "Calculates match percentage against active job offers and returns a ranked list of job matches")
+    @GetMapping("/user/offer-match")
+    public void getUserOffersMatch() {
+        return;
     }
 
     @Operation(summary = "Get most frequent co-occurring skills", 
@@ -71,14 +76,6 @@ public class SkillAnalysisController {
         return skillAnalysisService.getHighestAssociatedSkills(baseSkill, city, role, limit);
     }
 
-    @Operation(summary = "Calculate skill gap based on full profile", 
-               description = "Compares provided user skills against market requirements for specific role and location")
-    @PostMapping("/skill-gap")
-    public ResponseEntity<SkillGapResponseDto> performSkillGapAnalyze(
-                    @Valid @RequestBody SkillGapRequestDto request
-    ) {
-        return ResponseEntity.ok(skillGapService.analyzeSkillGap(request));
-    }
 
     @Operation(summary = "Get popular technology stacks for a role", 
                description = "Returns standard combinations of technologies frequently required together for the requested role")
@@ -89,13 +86,6 @@ public class SkillAnalysisController {
     ) {
         return skillStackService.getSkillsStackForRole(role, city);
     }
-
-    @GetMapping("/market-trends")
-    public void getMarketTrends() {
-        return;
-    }
-
-
 
 
 }

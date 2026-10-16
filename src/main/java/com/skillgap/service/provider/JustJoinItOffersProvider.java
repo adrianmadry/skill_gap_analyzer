@@ -63,7 +63,7 @@ public class JustJoinItOffersProvider implements JobOffersProvider {
                 break; 
             }
 
-        } while (nextCursor != null);
+        } while (nextCursor < 200);
 
         log.info("Successfully fetched {} offers from JustJoinIt provider", allOffers.size());
 
@@ -129,6 +129,11 @@ public class JustJoinItOffersProvider implements JobOffersProvider {
     public List<JobOfferDto> fetchByCity(String city) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'fetchByCity'");
+    }
+
+    @Override
+    public String getProviderName() {
+        return "JUST_JOIN_IT";
     }
 
 }

@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
@@ -15,6 +17,7 @@ import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.entity.ImportLog;
 import com.skillgap.entity.JobOffer;
 import com.skillgap.entity.enums.ImportStatus;
+import com.skillgap.exception.ProviderNotFoundException;
 import com.skillgap.integration.common.JobOfferDto;
 import com.skillgap.service.provider.JobOffersProvider;
 
@@ -42,7 +45,7 @@ public class JobOfferImportService {
                 importFromProvider(provider, existingIdInDb);
 
             } catch (Exception e) {
-                log.error("Failed to import offers from provider: {}. Error: {}", provider.getClass().getSimpleName(), e.getMessage());
+                log.error("Failed to import offers from provider: {}. Error: {}", provider.getProviderName(), e.getMessage());
             }
         }
         log.info("Job offer import process finished.");
@@ -50,7 +53,7 @@ public class JobOfferImportService {
 
     private ImportLog importFromProvider(JobOffersProvider provider, Set<String> existingIdInDb) {
 
-        String providerName = provider.getClass().getSimpleName();
+        String providerName = provider.getProviderName();
 
         ImportLog importLog = initializeImportLog(providerName);
         log.info("Fetching offers from provider: {}", providerName);
@@ -83,11 +86,27 @@ public class JobOfferImportService {
 
             finalizeFailedImportLog(e, importLog);
             importLogRepository.save(importLog);
+            throw e;
 
         }
 
         return importLog;
 
+    }
+
+    @Async
+    public void importFromProviderByName(String providerName) {
+        JobOffersProvider provider = providers.stream()
+                                            .filter(p -> p.getProviderName().equalsIgnoreCase(providerName))
+                                            .findFirst()
+                                            .orElseThrow(() -> new ProviderNotFoundException(providerName));
+
+        try {
+            importFromProvider(provider, jobOfferRepository.findAllExternalIds());
+        } catch (Exception e) {
+            log.error("Failed to manually trigger import for provider: {}", providerName, e);
+            throw e;
+        }
     }
 
     // Removes duplicate job offer DTOs within the fetched batch based on GUID.
@@ -106,6 +125,19 @@ public class JobOfferImportService {
                         .values()
                         .stream()
                         .toList();
+    }
+
+    // Filters out job offer DTOs that already exist in the database.
+    private List<JobOfferDto> filterNewBatch(List<JobOfferDto> dtos, Set<String> existingIdInDb) {
+        return dtos.stream()
+                    .filter(dto -> {
+                        boolean isExisting = existingIdInDb.contains(dto.getGuid());
+                        if (isExisting) {
+                            log.warn("Duplicate offer found in database, skipping. GUID: {}", dto.getGuid());
+                        }
+                        return !isExisting;
+                    })
+                    .toList();
     }
 
     private void finalizeFailedImportLog(Exception e, ImportLog importLog) {
@@ -128,24 +160,17 @@ public class JobOfferImportService {
                 importLog.getProviderName(), fetchedCount, savedCount, skippedCount);
     }
 
-    // Filters out job offer DTOs that already exist in the database.
-    private List<JobOfferDto> filterNewBatch(List<JobOfferDto> dtos, Set<String> existingIdInDb) {
-        return dtos.stream()
-                    .filter(dto -> {
-                        boolean isExisting = existingIdInDb.contains(dto.getGuid());
-                        if (isExisting) {
-                            log.warn("Duplicate offer found in database, skipping. GUID: {}", dto.getGuid());
-                        }
-                        return !isExisting;
-                    })
-                    .toList();
-    }
-
     private ImportLog initializeImportLog(String providerName) {
         return ImportLog.builder()
                         .providerName(providerName)
                         .startTime(LocalDateTime.now())
                         .build();
+    }
+
+    public List<String> getProvidersList() {
+        return providers.stream()
+                    .map(p -> p.getProviderName())
+                    .toList();
     }
 
 }

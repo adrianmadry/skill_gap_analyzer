@@ -13,19 +13,31 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skillgap.dao.SkillAliasRepository;
+import com.skillgap.dao.SkillRepository;
 
+@ExtendWith(MockitoExtension.class)
 public class SkillDictionaryLoaderTest {
 
     private SkillDictionaryLoader skillDictionaryLoader;
     private ObjectMapper objectMapper;
 
+    @Mock 
+    private SkillAliasRepository skillAliasRepository;
+
+    @Mock
+    private SkillRepository skillRepository;
+
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
-        skillDictionaryLoader = new SkillDictionaryLoader(objectMapper);
+        skillDictionaryLoader = new SkillDictionaryLoader(objectMapper, skillAliasRepository, skillRepository);
     }
 
     @Test
@@ -70,7 +82,7 @@ public class SkillDictionaryLoaderTest {
     void shouldHandleMissingFile() throws Exception {
         // Given
         ObjectMapper mockMapper = mock(ObjectMapper.class);
-        SkillDictionaryLoader loaderWithMissingFile = new SkillDictionaryLoader(mockMapper);
+        SkillDictionaryLoader loaderWithMissingFile = new SkillDictionaryLoader(mockMapper, skillAliasRepository, skillRepository);
 
         when(mockMapper.readValue(any(InputStream.class), any(TypeReference.class)))
                             .thenThrow(new IllegalArgumentException("there is no file to import"));
@@ -90,7 +102,7 @@ public class SkillDictionaryLoaderTest {
     void shouldHandleEmptyDictionary() throws Exception {
         // Given
         ObjectMapper mockMapper = mock(ObjectMapper.class);
-        SkillDictionaryLoader loaderWithEmptyFile= new SkillDictionaryLoader(mockMapper);
+        SkillDictionaryLoader loaderWithEmptyFile= new SkillDictionaryLoader(mockMapper, skillAliasRepository, skillRepository);
 
         when(mockMapper.readValue(any(InputStream.class), any(TypeReference.class)))
                             .thenReturn(new HashMap());

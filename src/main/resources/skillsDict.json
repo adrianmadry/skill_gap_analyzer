@@ -12,7 +12,7 @@
     "HTML": ["html", "html5"]
   },
   "frameworks": {
-    "Spring Boot": ["spring", "springboot", "spring boot 3"],
+    "Spring Boot": ["spring", "springboot", "spring boot 3", "spring-boot"],
     "React": ["react", "react.js", "reactjs"],
     "Angular": ["angular", "angularjs"],
     "Vue.js": ["vue", "vuejs"],

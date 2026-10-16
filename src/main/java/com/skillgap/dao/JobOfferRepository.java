@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.skillgap.dto.SkillTotalCountDto;
+import com.skillgap.dto.response.RoleDistributionDto;
 import com.skillgap.dto.response.SkillCoCountDto;
 import com.skillgap.dto.response.SkillStatsDto;
 import com.skillgap.entity.JobOffer;
@@ -117,6 +118,23 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
    List<Object[]> getOffersWithSkillsSet(
                      @Param("role") JobRoleTag role, 
                      @Param("city") String city);
+
+   @Query(      
+      "SELECT o.roleTag AS roleName, CAST(COUNT(o) AS long) AS count " +
+      "FROM JobOffer o " +
+      "WHERE (:city IS NULL OR o.city = :city) " +
+      "GROUP BY o.roleTag " +
+      "ORDER BY COUNT(o) DESC"
+   )
+   List<RoleCountProjection> getRolesDistribution(
+                     @Param("city") String city
+   );
+
+   public interface RoleCountProjection {
+      String getRoleName();
+      Long getCount();
+   }
+
 
 
 }

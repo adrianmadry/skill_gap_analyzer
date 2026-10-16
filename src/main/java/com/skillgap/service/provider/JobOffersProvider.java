@@ -9,4 +9,6 @@ public interface JobOffersProvider {
     List<JobOfferDto> fetchAll();
 
     List<JobOfferDto> fetchByCity(String city);
+
+    String getProviderName();
 }
