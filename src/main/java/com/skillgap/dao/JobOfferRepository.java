@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.skillgap.dto.SkillTotalCountDto;
-import com.skillgap.dto.response.RoleDistributionDto;
 import com.skillgap.dto.response.SkillCoCountDto;
 import com.skillgap.dto.response.SkillStatsDto;
 import com.skillgap.entity.JobOffer;

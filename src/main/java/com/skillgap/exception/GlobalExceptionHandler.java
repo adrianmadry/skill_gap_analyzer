@@ -5,12 +5,19 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.skillgap.exception.auth.PasswordsDoNotMatchException;
+import com.skillgap.exception.auth.UserAlreadyExistsException;
+
+import lombok.extern.slf4j.Slf4j;
+
 
 @ControllerAdvice
+@Slf4j 
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(SkillNotFoundException.class)
@@ -66,6 +73,33 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(
             Map.of("error", "Not Found", "message", ex.getMessage()),
             HttpStatus.NOT_FOUND
+        );
+    }
+
+    @ExceptionHandler(PasswordsDoNotMatchException.class)
+    public ResponseEntity<Object> handlePasswordDoNotMatchException(PasswordsDoNotMatchException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Bad Request", "message", ex.getMessage()),
+            HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return new ResponseEntity<>(
+            Map.of("error", "Conflict", "message", ex.getMessage()),
+            HttpStatus.CONFLICT
+        );
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Object> handleAuthenticationException(AuthenticationException ex) {
+
+        log.warn("Failed login attempt: {}", ex.getMessage());
+
+        return new ResponseEntity<>(
+            Map.of("error", "Unauthorized", "message", "Invalid email or password"),
+            HttpStatus.UNAUTHORIZED
         );
     }
 

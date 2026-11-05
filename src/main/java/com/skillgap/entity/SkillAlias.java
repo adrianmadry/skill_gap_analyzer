@@ -39,5 +39,4 @@ public class SkillAlias {
         this.skill = skill;
     }
 
-
 }
