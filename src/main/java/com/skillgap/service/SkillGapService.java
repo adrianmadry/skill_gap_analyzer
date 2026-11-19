@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -12,16 +11,20 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.skillgap.dao.JobOfferRepository;
 import com.skillgap.dao.SkillRepository;
+import com.skillgap.dao.UserRepository;
 import com.skillgap.dto.SkillRecommendationDto;
 import com.skillgap.dto.SkillTotalCountDto;
 import com.skillgap.dto.external.SkillGapRequestDto;
 import com.skillgap.dto.response.SkillGapResponseDto;
+import com.skillgap.entity.AppUser;
 import com.skillgap.entity.Skill;
 import com.skillgap.entity.enums.JobRoleTag;
 import com.skillgap.exception.NoMarketDataException;
+import com.skillgap.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,7 @@ public class SkillGapService {
     
     private final JobOfferRepository jobOfferRepository;
     private final SkillRepository skillRepository;
+    private final UserRepository userRepository;
 
     @Value("${skill-gap.thresholds.must-have:50.0}")
     private double mustHaveThreshold;
@@ -46,15 +50,20 @@ public class SkillGapService {
     @Value("${skill-gap.weights.nice-to-have:0.2}")
     private double niceToHaveWeight;
 
-    public SkillGapResponseDto analyzeSkillGap(SkillGapRequestDto request) {
-        List<String> lowerCaseUserSkills = request.userSkills().stream()
-            .map(String::toLowerCase)
-            .toList();
+    @Transactional(readOnly = true)
+    public SkillGapResponseDto analyzeUserSkillGap(Long userId, SkillGapRequestDto request) {
+        
+        AppUser loggedUser = userRepository.findById(userId)
+                                                .orElseThrow(() -> new ResourceNotFoundException("User with id: " + userId + " not found"));
+
+        Set<Long> userSkillsIds = loggedUser.getSkills().stream()
+                                                        .map(Skill::getId)
+                                                        .collect(Collectors.toSet());
+
         JobRoleTag targetRole = request.targetRole();
         String city = request.city();
-            
-        List<Long> userSkillsIdsList = skillRepository.findIdsByNamesIgnoreCase(lowerCaseUserSkills);
-        Set<Long> userSkillsIds = new HashSet<>(userSkillsIdsList);
+
+        log.info("Perform Skill gap analysis for user {}, role {}, city {}", userId, targetRole, city);
 
         long totalOffersCount = jobOfferRepository.countOffersByRoleAndCity(targetRole, city);
         if (totalOffersCount == 0) {

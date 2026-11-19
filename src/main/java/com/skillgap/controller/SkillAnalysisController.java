@@ -1,8 +1,10 @@
 package com.skillgap.controller;
 
+
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +15,12 @@ import com.skillgap.dto.external.SkillGapRequestDto;
 import com.skillgap.dto.response.CoOccurrenceResultDto;
 import com.skillgap.dto.response.SkillGapResponseDto;
 import com.skillgap.dto.response.SkillStatsDto;
+import com.skillgap.entity.AppUser;
 import com.skillgap.entity.enums.JobRoleTag;
 import com.skillgap.service.SkillAnalysisService;
 import com.skillgap.service.SkillGapService;
 import com.skillgap.service.SkillStackService;
+import com.skillgap.service.UserService;
 import com.skillgap.dto.response.SkillStackDto;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,14 +39,16 @@ public class SkillAnalysisController {
     private final SkillAnalysisService skillAnalysisService;
     private final SkillGapService skillGapService;
     private final SkillStackService skillStackService;
+    private final UserService userService;
 
-    @Operation(summary = "Calculate skill gap based on full profile", 
-               description = "Compares provided user skills against market requirements for specific role and location")
+    @Operation(summary = "Calculate skill gap based on user profile", 
+               description = "Compares currently logged-in user skills against market requirements for specific role and location")
     @PostMapping("/user/skill-gap")
     public ResponseEntity<SkillGapResponseDto> performSkillGapAnalyze(
-                    @Valid @RequestBody SkillGapRequestDto request
+                    @Valid @RequestBody SkillGapRequestDto request,
+                    @AuthenticationPrincipal AppUser user
     ) {
-        return ResponseEntity.ok(skillGapService.analyzeSkillGap(request));
+        return ResponseEntity.ok(skillGapService.analyzeUserSkillGap(user.getId(), request));
     }
 
     @Operation(summary = "Find best matching job offers for user profile", 

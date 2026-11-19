@@ -1,7 +1,9 @@
 package com.skillgap.entity;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +15,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +51,15 @@ public class AppUser implements UserDetails {
     @Column(nullable = false)
     private UserRole role;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "user_skills",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="skill_id")
+
+    )
+    private Set<Skill> skills = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -58,6 +73,14 @@ public class AppUser implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public void addSkill(Skill skill) {
+        this.skills.add(skill);
+    }
+
+    public void removeSkill(Skill skill) {
+        this.skills.remove(skill);
     }
 
     public AppUser(String email, String password, UserRole role) {

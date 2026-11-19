@@ -13,13 +13,6 @@ import jakarta.validation.constraints.Size;
 @Schema(description = "Represents the data provided by the user to execute a skill gap analysis.")
 public record SkillGapRequestDto(
     
-    @NotEmpty(message = "User skills list cannot be empty. Please provide at least one skill.")
-    @Size(max = 50, message = "Cannot analyze more than 50 skills at once.")
-    @Schema(description = "List of skills currently possessed by the user.", 
-            example = "[\"Java\", \"Git\", \"Hibernate\"]",
-            requiredMode = Schema.RequiredMode.REQUIRED)
-    List<String> userSkills,
-
     @NotNull(message = "Target role cannot be empty. Please provide role.")
     @Schema(description = "The target professional role to analyze against market demands.", 
             example = "JAVA_DEVELOPER",
