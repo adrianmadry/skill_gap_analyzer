@@ -1,0 +1,16 @@
+package com.skillgap.entity.enums;
+
+public enum JobRoleTag {
+    JAVA_DEVELOPER,
+    PYTHON_DEVELOPER,
+    FRONTEND_DEVELOPER,
+    BACKEND_DEVELOPER,
+    FULLSTACK_DEVELOPER,
+    DEVOPS,
+    DATA_ANALYST,
+    DATA_SCIENTIST,
+    DATA_ENGINEER,
+    PROJECT_MANAGER,
+    TESTER,
+    OTHER
+}

@@ -1,0 +1,135 @@
+# Dictionary for mapping offer's title to role (JobRoleTag)
+JAVA_DEVELOPER:
+  - "java"
+  - "spring"
+  - "spring boot"
+  - "hibernate"
+  - "jvm"
+  - "j2ee"
+  - "jakarta"
+  
+PYTHON_DEVELOPER:
+  - "python"
+  - "django"
+  - "flask"
+  - "fastapi"
+  
+FRONTEND_DEVELOPER:
+  - "frontend"
+  - "front-end"
+  - "front end"
+  - "react"
+  - "angular"
+  - "vue"
+  - "javascript"
+  - "typescript"
+  - "css"
+  - "html"
+  - "ui developer"
+  - "web developer"
+  
+BACKEND_DEVELOPER:
+  - "backend"
+  - "back-end"
+  - "back end"
+  - "node"
+  - "nodejs"
+  - "express"
+  - "rest api"
+  - "microservices"
+  - "server side"
+  - "php"
+  - "ruby"
+  - "go developer"
+  - "golang"
+
+FULLSTACK_DEVELOPER:
+  - fullstack
+  - full stack
+  - full-stack
+  - mern
+  - mean
+  - lamp
+  - frontend and backend
+  - end to end developer
+  
+DEVOPS:
+  - "devops"
+  - "dev ops"
+  - "sre"
+  - "site reliability"
+  - "platform engineer"
+  - "infrastructure"
+  - "cloud engineer"
+  - "kubernetes"
+  - "docker"
+  - "ci/cd"
+  - "jenkins"
+  - "terraform"
+  - "ansible"
+  - "aws engineer"
+  - "azure engineer"
+  
+DATA_ANALYST:
+  - "data analyst"
+  - "business analyst"
+  - "bi developer"
+  - "bi analyst"
+  - "business intelligence"
+  - "tableau"
+  - "power bi"
+  - "sql analyst"
+  - "reporting analyst"
+  - "data reporting"
+  
+DATA_SCIENTIST:
+  - "data scientist"
+  - "machine learning"
+  - "ml engineer"
+  - "ai engineer"
+  - "deep learning"
+  - "nlp"
+  - "computer vision"
+  - "data science"
+  - "tensorflow"
+  - "pytorch"
+  - "scikit"
+  - "llm engineer"
+
+DATA_ENGINEER:
+  - data engineer
+  - etl developer
+  - etl
+  - data pipeline
+  - data warehouse
+  - dwh
+  - spark
+  - hadoop
+  - kafka
+  - airflow
+  - dbt
+  - snowflake
+  - databricks
+  - big data
+  
+PROJECT_MANAGER:
+  - "project manager"
+  - "pm"
+  - "scrum master"
+  - "delivery manager"
+  - "product owner"
+  - "po"
+  - "agile coach"
+  - "program manager"
+  - "it manager"
+  
+TESTER:
+  - "tester"
+  - "qa"
+  - "quality assurance"
+  - "quality engineer"
+  - "selenium"
+  - "playwright"
+  - "manual tester"
+  - "sdet"
+  - "test engineer"
